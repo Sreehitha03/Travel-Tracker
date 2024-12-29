@@ -7,11 +7,11 @@ const port = 3000;
 
 // Configure PostgreSQL connection
 const db = new pg.Client({
-  user: "postgres",
-  host: "localhost",
-  database: "world",
-  password: "9876543210",
-  port: 5432,
+  user: USER,
+  host: HOST,
+  database: DATABASE,
+  password: PASSWORD,
+  port: PORT,
 });
 
 // Establish database connection

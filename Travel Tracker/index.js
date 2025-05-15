@@ -5,7 +5,6 @@ import pg from "pg";
 const app = express();
 const port = 3000;
 
-// Configure PostgreSQL connection
 const db = new pg.Client({
   user: USER,
   host: HOST,
@@ -14,17 +13,16 @@ const db = new pg.Client({
   port: PORT,
 });
 
-// Establish database connection
 db.connect().catch((err) => {
   console.error("Failed to connect to the database:", err);
-  process.exit(1); // Exit the process if the database connection fails
+  process.exit(1);
 });
 
-// Middleware for parsing URL-encoded form data and serving static files
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-// Fetch visited countries
+
 async function checkVisited() {
   try {
     const result = await db.query("SELECT country_code FROM visited_countries");
@@ -46,12 +44,12 @@ app.get("/", async (req, res) => {
   }
 });
 
-// Route: POST to add a new country
+
 app.post("/add", async (req, res) => {
   const input = req.body["country"].toLowerCase();
 
   try {
-    // Validate country name
+    
     const result = await db.query(
       "SELECT country_code FROM countries WHERE LOWER(country_name) LIKE '%' || $1 || '%';",
       [input]
@@ -68,7 +66,6 @@ app.post("/add", async (req, res) => {
 
     const countryCode = result.rows[0].country_code;
 
-    // Insert country into visited_countries table
     try {
       await db.query(
         "INSERT INTO visited_countries (country_code) VALUES ($1)",
@@ -95,7 +92,7 @@ app.post("/add", async (req, res) => {
   }
 });
 
-// Start the server
+
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });

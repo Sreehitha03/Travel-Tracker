@@ -30,7 +30,6 @@ This project is a web application that allows users to highlight countries they 
 1. Clone the repository:
    ```bash
    git clone <repository-url>
-   cd visited-countries-map
    ```
 
 2. Install dependencies:
